@@ -1,0 +1,70 @@
+.App {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 90%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+
+  #biblio {
+    width: 100%;
+  }
+
+  #reveal {
+    position: absolute;
+    left: 39.5vw;
+    bottom: 4vh;
+    width: 6vw;
+    height: 11vh;
+    cursor: pointer;
+    animation: revealBooks 2s infinite alternate;
+
+    &.off {
+      animation: none;
+      cursor: unset;
+    }
+  }
+
+  &::before {
+    position: absolute;
+    left: 1.7vw;
+    top: 2.6vh;
+    width: 43vw;
+    height: 18vh;
+    background: transparent url(./assets/images/titre.webp) no-repeat 0 0 /
+      contain;
+    content: '';
+  }
+
+  &::after {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 23vw;
+    height: 100%;
+    background: transparent url(./assets/images/head.webp) no-repeat 0 0 /
+      contain;
+    content: '';
+    animation: badHead 50s;
+  }
+}
+
+@keyframes badHead {
+  from {
+    right: -24vw;
+  }
+  to {
+    right: 0;
+  }
+}
+
+@keyframes revealBooks {
+  from {
+    bottom: 7vh;
+    height: 9vh;
+  }
+  to {
+    bottom: 4vh;
+    height: 11vh;
+  }
+}

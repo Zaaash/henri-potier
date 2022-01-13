@@ -1,0 +1,35 @@
+.booksList {
+  position: absolute;
+  right: 2vw;
+  top: 1vh;
+  width: 35vw;
+  height: 90vh;
+  z-index: 500;
+  overflow: hidden;
+
+  & > DIV {
+    overflow: auto;
+    height: 100%;
+    width: 35.5vw;
+    padding-right: 3vw;
+  }
+
+  UL {
+    position: relative;
+    opacity: 0;
+    margin-top: 100vh;
+    margin-bottom: 0;
+    padding-left: 0;
+    list-style: none;
+    transition: ease-out 1s all;
+
+    &.on {
+      margin-top: 80vh;
+      opacity: 1;
+    }
+
+    LI:last-child DIV {
+      margin-bottom: 0;
+    }
+  }
+}

@@ -1,0 +1,105 @@
+.book {
+  display: flex;
+  margin-bottom: 3vh;
+  border: 1px solid var(--color-price);
+  padding: 1vw;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: var(--color-title);
+
+  &.plus {
+    left: 50%;
+    position: fixed;
+    top: 50%;
+    width: 90%;
+    height: auto;
+    transform: translate(-50%, -50%);
+    z-index: 8;
+    background-color: rgba(0, 0, 0, 0.85);
+
+    & DIV.desc {
+      margin-top: 2vh;
+      font-size: 1.2vw !important;
+    }
+
+    & DIV:last-child BUTTON {
+      display: block;
+    }
+  }
+
+  IMG {
+    display: block;
+    width: 8.8vw;
+    cursor: pointer;
+
+    // Bouton ACHETER
+    & + BUTTON {
+      margin-top: 2vh;
+      border: 0;
+      padding: 0;
+      background: none;
+      font: bold 0.9vw 'potter';
+      text-transform: uppercase;
+      letter-spacing: 0.5vw;
+      color: var(--color-title);
+      cursor: pointer;
+
+      &::after {
+        display: inline-block;
+        width: 1.2vw;
+        height: 2.4vh;
+        background: transparent url(../assets/images/picto_buy.webp) no-repeat 0
+          0 / contain;
+        content: '';
+        vertical-align: sub;
+      }
+
+      &:hover {
+        color: var(--color-price);
+      }
+    }
+  }
+
+  DIV:last-child {
+    flex: 1;
+    position: relative;
+    margin-left: 10px;
+
+    H2 {
+      margin-top: -0.7vh;
+      margin-bottom: 0;
+      line-height: 4vh;
+      font-size: 1.8vw;
+      cursor: pointer;
+    }
+
+    .price {
+      position: absolute;
+      right: 0.2vw;
+      bottom: -0.5vh;
+      color: var(--color-price);
+      font-weight: bold;
+      font-size: 2vw;
+    }
+
+    .desc {
+      margin-bottom: 30px;
+      color: var(--color-text);
+      font-size: 1vw;
+      text-align: justify;
+    }
+
+    BUTTON {
+      display: none;
+      position: absolute;
+      right: 0.6vw;
+      top: -0.2vh;
+      border: 0;
+      width: 20px;
+      height: 20px;
+      background-color: transparent;
+      font: bold 2vw 'potter';
+      color: var(--color-text);
+      cursor: pointer;
+    }
+  }
+}
