@@ -2,13 +2,8 @@
 Collection des livres d'Henri Potier en promotion exceptionnelle
 
 Installation
-After cloning the repository, run npm install -g @angular/cling in the working directory to install all the modules necessary for its operation.
+Après avoir cloné le projet, et en supposant que nodeJS et NPM sont déjà installés, il suffira de se placer dans le répertoire téléchargé et de lancer la commande npm install pour installer les bonnes dépendances.
 
-Development server
-Run ng serve for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
+Application
+Lancer la commander npm start ; l'application se lancera alors dans une nouvelle fenêtre de navigateur sur un port préalablement choisi.
 
-Build
-Run ng build to build the project. The build artifacts will be stored in the dist/ directory. Use the --prod flag for a production build.
-
-Running unit tests
-Run ng test to execute the unit tests via Karma.
