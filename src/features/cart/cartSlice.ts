@@ -1,5 +1,6 @@
 import { AppThunk, RootState } from '../../app/store'
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { useEffect, useState } from 'react'
 
 import { FetchCart } from './cartAPI'
 
@@ -80,7 +81,6 @@ export const fetchPromos = createAsyncThunk(
     return 333 //response
   },
 )
-
 export const cartSlice = createSlice({
   name: 'cart',
   initialState,
@@ -151,13 +151,14 @@ export const insertBook = (book: CartBook): AppThunk => (
   getState,
 ) => {
   const items = selectItems(getState())
+  const newBook = { ...book }
 
   let placement = -1
   items.forEach((item, key) => {
     if (book.isbn === item.isbn) placement = key
   })
-  book.order = placement
-  dispatch(addToCart(book))
+  newBook.order = placement
+  dispatch(addToCart(newBook))
 }
 
 export default cartSlice.reducer
