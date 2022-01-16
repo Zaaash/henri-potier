@@ -39,10 +39,7 @@ const initialState: CartState = {
   total: 0,
   status: 'idle',
 }
-
 const applyPromo = (books: Array<CartBook>, soustotal: number) => {
-  let discount = 0
-
   const codes = books.map((item) => {
     if (item.quantity > 1) {
       let c = ''
@@ -59,10 +56,11 @@ const applyPromo = (books: Array<CartBook>, soustotal: number) => {
       .get('https://henri-potier.techx.fr/books/' + codes + '/commercialOffers')
       .then((res) => {
         promos = res.data.offers
+        return promos
       })
-
     console.log('PROMOS :', promos)
 
+    let discount = 0
     promos &&
       promos.forEach((offer) => {
         switch (offer.type) {
@@ -88,16 +86,15 @@ const applyPromo = (books: Array<CartBook>, soustotal: number) => {
             break
         }
       })
-    console.log('FETCH DISC :', discount)
-    const toto = new Promise<{ data: number }>((resolve) =>
-      resolve({ data: discount }),
-    )
-    console.log('PROMESSE :', toto)
+    console.log('PROMESSE :', discount)
 
-    return toto
+    return discount
   }
-  fetchPromos()
-  console.log('DICSOUNT :', discount)
+
+  const toto = fetchPromos()
+
+  console.log('TOTOOOOOOOOO :', toto)
+
   return 33
 }
 
