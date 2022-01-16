@@ -31,7 +31,7 @@ export function Cart() {
       <ul>
         {mybooks.map((book, key) => {
           return (
-            <li>
+            <li key={key}>
               <div>
                 <img src={book.cover} alt="visuel de livre dans le panier" />
               </div>

@@ -34,7 +34,6 @@ export default function Book(props) {
 
   const addBook = (evt) => {
     if (ifPlus) handlePlus(evt)
-    console.log('LOOOOOOOOOOG :', props.data)
     dispatch(insertBook(props.data))
   }
 

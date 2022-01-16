@@ -16,7 +16,7 @@ export default function HPBooks() {
       .getElementsByClassName('booksList')[0]
       .getElementsByTagName('ul')[0]
     if (list.className === '') {
-      list.classList.add('on')
+      list.classList.add('search')
       evt.target.classList.add('off')
     }
   }
