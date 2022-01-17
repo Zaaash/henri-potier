@@ -18,11 +18,11 @@ interface offer {
   value: number
 }
 
-const offers: Array<offer> = [
-  { type: 'percentage', value: 4 },
-  { type: 'minus', value: 15 },
-  { type: 'slice', sliceValue: 100, value: 12 },
-]
+// const offers: Array<offer> = [
+//   { type: 'percentage', value: 4 },
+//   { type: 'minus', value: 15 },
+//   { type: 'slice', sliceValue: 100, value: 12 },
+// ]
 
 export interface CartState {
   value: number
@@ -39,7 +39,8 @@ const initialState: CartState = {
   total: 0,
   status: 'idle',
 }
-const applyPromo = (books: Array<CartBook>, soustotal: number) => {
+
+const applyPromo = async (books: Array<CartBook>, soustotal: number) => {
   const codes = books.map((item) => {
     if (item.quantity > 1) {
       let c = ''
@@ -50,18 +51,21 @@ const applyPromo = (books: Array<CartBook>, soustotal: number) => {
   })
   console.log('CODES :', codes)
 
-  const fetchPromos = async () => {
-    let promos = offers
-    await axios
+  const fetchOffers = async () => {
+    return await axios
       .get('https://henri-potier.techx.fr/books/' + codes + '/commercialOffers')
       .then((res) => {
-        promos = res.data.offers
+        console.log('RES', res.data.offers)
+        return res.data.offers
       })
-    console.log('PROMOS :', promos)
+  }
+
+  const getPromos = async () => {
+    const promos = await fetchOffers()
 
     let discount = 0
     promos &&
-      promos.forEach((offer) => {
+      promos.forEach((offer: offer) => {
         switch (offer.type) {
           // pourcentage
           case 'percentage':
@@ -85,20 +89,14 @@ const applyPromo = (books: Array<CartBook>, soustotal: number) => {
             break
         }
       })
-    console.log('PROMESSE :', discount)
 
     return discount
   }
 
-  // async function getGoodPromo() {
-  //   const discount = await fetchPromos()
-  //   console.log('REZZZZZZZ :', discount) // 10
-  //   return discount
-  // }
-  // const kiki = getGoodPromo()
-  // setTimeout(() => console.log('KIKI :', kiki), 500)
+  const result = await getPromos()
+  console.log('PROMO CHOISIE :', result)
 
-  return 33 //() => await fetchPromos()
+  return result
 }
 
 export const cartSlice = createSlice({
@@ -126,16 +124,20 @@ export const cartSlice = createSlice({
         state.items[order].quantity += 1
       }
       state.value += price
-      const discount = applyPromo(state.items, state.value)
-      state.discount = discount
-      state.total = state.value - discount
+      applyPromo(state.items, state.value).then((v) => {
+        console.log('DISCOUNT RECU : ', v)
+        state.discount = 4
+      })
+
+      state.discount = 7
+      state.total = state.value - 77
     },
     delCart: (state, order: PayloadAction<number>) => {
       state.value -=
         state.items[order.payload].price * state.items[order.payload].quantity
-      const discount = applyPromo(state.items, state.value)
-      state.discount = discount
-      state.total = state.value - discount
+      // const discount = applyPromo(state.items, state.value)
+      // state.discount = discount
+      // state.total = state.value - discount
     },
   },
 })
