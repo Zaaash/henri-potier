@@ -56,7 +56,6 @@ const applyPromo = (books: Array<CartBook>, soustotal: number) => {
       .get('https://henri-potier.techx.fr/books/' + codes + '/commercialOffers')
       .then((res) => {
         promos = res.data.offers
-        return promos
       })
     console.log('PROMOS :', promos)
 
@@ -91,11 +90,15 @@ const applyPromo = (books: Array<CartBook>, soustotal: number) => {
     return discount
   }
 
-  const toto = fetchPromos()
+  // async function getGoodPromo() {
+  //   const discount = await fetchPromos()
+  //   console.log('REZZZZZZZ :', discount) // 10
+  //   return discount
+  // }
+  // const kiki = getGoodPromo()
+  // setTimeout(() => console.log('KIKI :', kiki), 500)
 
-  console.log('TOTOOOOOOOOO :', toto)
-
-  return 33
+  return 33 //() => await fetchPromos()
 }
 
 export const cartSlice = createSlice({

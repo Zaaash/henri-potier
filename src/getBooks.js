@@ -27,6 +27,7 @@ export function Getbooks() {
     const list = document
       .getElementsByClassName('booksList')[0]
       .getElementsByTagName('ul')[0]
+
     if (list.className === '') {
       list.classList.add('on')
       document.getElementById('reveal').classList.add('off')
@@ -39,6 +40,7 @@ export function Getbooks() {
       .getElementById('search')
       .getElementsByTagName('input')[0]
 
+    evt.target.src && evt.target.classList.add('off')
     if (inputSearch.className === 'on') inputSearch.classList.remove('on')
     else {
       inputSearch.classList.add('on')

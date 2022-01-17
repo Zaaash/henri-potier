@@ -11,6 +11,11 @@
     width: 3vw;
     z-index: 2;
     cursor: pointer;
+    animation: loupe 3s infinite alternate;
+
+    &.off {
+      animation: none;
+    }
   }
 
   INPUT {
@@ -29,6 +34,17 @@
       opacity: 1;
       width: 100%;
     }
+  }
+}
+
+@keyframes loupe {
+  from {
+    margin-top: 1.5vh;
+    width: 2.5vw;
+  }
+  to {
+    margin-top: 1.1vh;
+    width: 3vw;
   }
 }
 
