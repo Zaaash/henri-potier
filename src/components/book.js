@@ -1,7 +1,8 @@
 import './book.scss'
 
+import { checkPromo, insertBook } from '../features/cart/cartSlice'
+
 import React from 'react'
-import { insertBook } from '../features/cart/cartSlice'
 import { useAppDispatch } from '../app/hooks'
 
 export default function Book(props) {
@@ -35,6 +36,7 @@ export default function Book(props) {
   const addBook = (evt) => {
     if (ifPlus) handlePlus(evt)
     dispatch(insertBook(props.data))
+    dispatch(checkPromo())
   }
 
   return (

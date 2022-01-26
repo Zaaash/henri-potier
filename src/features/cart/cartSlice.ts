@@ -49,13 +49,11 @@ const applyPromo = async (books: Array<CartBook>, soustotal: number) => {
       return c
     } else return item.isbn
   })
-  console.log('CODES :', codes)
 
   const fetchOffers = async () => {
     return await axios
       .get('https://henri-potier.techx.fr/books/' + codes + '/commercialOffers')
       .then((res) => {
-        console.log('RES', res.data.offers)
         return res.data.offers
       })
   }
@@ -71,12 +69,10 @@ const applyPromo = async (books: Array<CartBook>, soustotal: number) => {
           case 'percentage':
             const result = (soustotal * offer.value) / 100
             if (offer.value > result) discount = result
-            console.log('perc', result)
             break
           // remise directe
           case 'minus':
             if (offer.value > discount) discount = offer.value
-            console.log('value', offer.value)
             break
           // remise par tranche
           case 'slice':
@@ -84,7 +80,6 @@ const applyPromo = async (books: Array<CartBook>, soustotal: number) => {
               const tranche =
                 Math.floor(soustotal / offer.sliceValue) * offer.value
               if (tranche > discount) discount = tranche
-              console.log('slice', tranche)
             }
             break
         }
@@ -94,7 +89,6 @@ const applyPromo = async (books: Array<CartBook>, soustotal: number) => {
   }
 
   const result = await getPromos()
-  console.log('PROMO CHOISIE :', result)
 
   return result
 }
@@ -124,25 +118,20 @@ export const cartSlice = createSlice({
         state.items[order].quantity += 1
       }
       state.value += price
-      applyPromo(state.items, state.value).then((v) => {
-        console.log('DISCOUNT RECU : ', v)
-        state.discount = 4
-      })
-
-      state.discount = 7
-      state.total = state.value - 77
+    },
+    applyDiscount: (state, val: PayloadAction<number>) => {
+      state.discount = Number(val.payload)
+      state.total = state.value - state.discount
     },
     delCart: (state, order: PayloadAction<number>) => {
       state.value -=
         state.items[order.payload].price * state.items[order.payload].quantity
-      // const discount = applyPromo(state.items, state.value)
-      // state.discount = discount
-      // state.total = state.value - discount
+      state.items.splice(order.payload, 1)
     },
   },
 })
 
-export const { addToCart, delCart } = cartSlice.actions
+export const { addToCart, applyDiscount, delCart } = cartSlice.actions
 
 // Sélecteurs
 export const selectCart = (state: RootState) => state.cart.value
@@ -165,6 +154,17 @@ export const insertBook = (book: CartBook): AppThunk => (
   })
   newBook.order = placement
   dispatch(addToCart(newBook))
+}
+
+export const checkPromo = (): AppThunk => (dispatch, getState) => {
+  const items = selectItems(getState())
+  const value = selectCart(getState())
+
+  if (items.length > 0)
+    applyPromo(items, value).then((discount) => {
+      dispatch(applyDiscount(discount))
+    })
+  else dispatch(applyDiscount(0))
 }
 
 export default cartSlice.reducer

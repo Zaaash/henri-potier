@@ -1,6 +1,7 @@
 import './Cart.scss'
 
 import {
+  checkPromo,
   delCart,
   selectCart,
   selectDiscount,
@@ -26,6 +27,11 @@ export function Cart() {
   const total = useAppSelector(selectTotal)
   const dispatch = useAppDispatch()
 
+  const delBook = (book: number) => {
+    dispatch(delCart(book))
+    dispatch(checkPromo())
+  }
+
   return (
     <div id="cart">
       <ul>
@@ -40,7 +46,7 @@ export function Cart() {
               <div>x</div>
               <div>{book.price}€</div>
               <button
-                onClick={() => dispatch(delCart(key))}
+                onClick={() => delBook(key)}
                 title={'supprimer le livre «' + book.title + '» du panier'}
               >
                 X
@@ -58,11 +64,11 @@ export function Cart() {
           </li>
           <li className="discount">
             <div>formule magique :</div>
-            <div>-{discount}€</div>
+            <div>-{discount.toFixed(2)}€</div>
           </li>
           <li className="total">
             <div>total :</div>
-            <div>{total}€</div>
+            <div>{total.toFixed(2)}€</div>
           </li>
           <li>
             <button onClick={handleBuy}>commander</button>
